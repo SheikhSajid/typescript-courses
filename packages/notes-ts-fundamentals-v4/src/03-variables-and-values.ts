@@ -6,9 +6,9 @@ let humidity = 79 as 79  //! literal type
 //* A type as a set of allowed values
 // temperature = 23 //✔️ (1)  - re-assignability of a let
 // temperature = humidity; //! (2) - type-checking
-humidity = temperature; //! (3) - number is not of type `79`
+// humidity = temperature; //! (3) - number is not of type `79`
 humidity = 79; //✔️ (4) - 79 is of type `79`
-humidity = 78; //! (5) - 78 is not of type `79`
+// humidity = 78; //! (5) - 78 is not of type `79`
 
 
 
@@ -16,7 +16,7 @@ let temp2 = 19; //! temp2's type is { all numbers }
 let humid2 = 79 as const; //
 // temp2 = 23; //! Is each member in { 23 } also in { all numbers }?
 // temp2 = humid2; //! Is each member in { 79 } also in { all numbers }?
-humid2 = temp2; //! Is each member in { all numbers } also in { 79 }?
+// humid2 = temp2; //! Is each member in { all numbers } also in { 79 }?
 // humid2 = 79; //! Is each member in { 79 } also in { 79 }
 // humid2 = 78; //! Is each member in { 78 } also in { 79 }
 
@@ -33,7 +33,7 @@ setTimeout(() => {
     endTime = new Date()
 }, RANDOM_WAIT_TIME)
 
-endTime.getDate()
+// endTime.getDate() //! Used before assigned
 
 //* Type Casting
 
