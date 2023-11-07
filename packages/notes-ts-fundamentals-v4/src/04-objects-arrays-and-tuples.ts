@@ -6,19 +6,19 @@ let car: {
   year: number
 }
 
-/*
+
 //? A function that prints info about a car to stdout
-// function printCar(car: {
-//     make: string
-//     model: string
-//     year: number
-// }) {
-//     console.log(`${car.make} ${car.model} (${car.year})`)
-// }
+function printCar(car: {
+    make: string
+    model: string
+    year: number
+}) {
+    console.log(`${car.make} ${car.model} (${car.year})`)
+}
 
 // printCar(car)
 
-/*
+
 //* Optional properties
 //? Insert into function printCar
 // let str = `${car.make} ${car.model} (${car.year})`
@@ -26,7 +26,7 @@ let car: {
 // if (typeof car.chargeVoltage !== "undefined")
 //   str += `// ${car.chargeVoltage}v`
 
-/*
+
 // printCar({ //? original fn works
 //     make: "Honda",
 //     model: "Accord",
@@ -40,17 +40,17 @@ let car: {
 //     chargeVoltage: 220,
 // })
 
-/*
+
 //* Excess property checking
 
-// printCar({
-//     make: "Tesla",
-//     model: "Model 3",
-//     year: 2020,
-//     color: "RED", //? EXTRA PROPERTY
-// })
+printCar({
+    make: "Tesla",
+    model: "Model 3",
+    year: 2020,
+    // color: "RED", //! EXTRA PROPERTY
+})
 
-/*
+
 //* Index signatures
 
 //? Dictionary of phone #s
@@ -59,19 +59,25 @@ let car: {
 //     work: { country: "+1", area: "670", number: "752-5856" },
 //     fax: { country: "+1", area: "322", number: "525-4357" },
 // }
-/*
+
 //? Model as an index signature
-// const phones: {
-//     [k: string]: {
-//         country: string
-//         area: string
-//         number: string
-//     }
-// } = {}
+const phones: {
+    [k: string]: {
+        country: string
+        area: string
+        number: string
+    } | undefined //? undefined is important, otherwise TS thinks phones always has a value for every key
+} = {
+  home: { country: "+1", area: "211", number: "652-4515" },
+  work: { country: "+1", area: "670", number: "752-5856" },
+  fax: { country: "+1", area: "322", number: "525-4357" }
+}
+
+// phones.home.area
 
 //*  Array Types
 
-/*
+
 // const fileExtensions = ["js", "ts"]
 //        ^? string[]
 
@@ -85,18 +91,18 @@ let car: {
 
 
 //* Tuples
-/*
-// let myCar = [
-//     2002,     // Year
-//     "Toyota", // Make
-//     "Corolla" // Model
-// ]
+
+let myCar: [number, string, string] = [
+    2002,     // Year
+    "Toyota", // Make
+    "Corolla" // Model
+]
 // const [year, make, model] = myCar //✔️ Destructuring
+// const [year, make, model, color] = myCar //! Too many elements
 
 //? Inference doesn't work very well for tuples
-/*
 // myCar = ["Honda", 2017, "Accord", "Sedan"] //! Wrong convention
-/*
+
 // let myCar: [number, string, string] = [
 //     2002,
 //     "Toyota",
@@ -107,24 +113,25 @@ let car: {
 
 
 //*  `readonly` tuples
-/*
-// const numPair: [number, number] = [4, 5]; //✔️ Valid
+
+const numPair: [number, number] = [4, 5]; //✔️ Valid
 // const numTriplet: [number, number, number] = [7]; //! Invalid
 
-// [101, 102, 103].length //? number[].length
-// numPair.length //? [number, number] length
+[101, 102, 103].length //? number[].length
+numPair.length //? [number, number] length
 
-// numPair.push(6) // [4, 5, 6]
+numPair.push(6) // [4, 5, 6] //! push/pop not checked by TS
 // numPair.pop() // [4, 5]
 // numPair.pop() // [4]
 // numPair.pop() // []
 
-// numPair.length  //! ❌ DANGER ❌
+numPair.length  //! ❌ DANGER ❌ TS still thinks it's 2 (length has literal type of 2)
 
-// const roNumPair: readonly [number, number] = [4, 5]
-// roNumPair.length
+const roNumPair: readonly [number, number] = [4, 5]
+roNumPair.length
 // roNumPair.push(6) // [4, 5, 6] //! Not allowed
 // roNumPair.pop() // [4, 5] //! Not allowed
+// roNumPair[1] = 6 //! Not allowed
 
 /**/
 
