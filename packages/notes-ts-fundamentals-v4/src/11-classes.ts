@@ -2,15 +2,11 @@
 
 //? Field types
 class Car {
-  make: string
-  model: string
-  year: number
-  constructor(make: string, model: string, year: number) {
-    this.make = make
-    this.model = model
-    //     ^?
-    this.year = year
-  }
+  constructor(
+    public make: string,
+    public model: string,
+    public year: number
+  ) {} //* shorthand for declaring AND INITIALIZING member fields
 
   //* static member fields
   static nextSerialNumber = 100
@@ -43,6 +39,24 @@ class Car {
 let sedan = new Car('Honda', 'Accord', 2017)
 // sedan.activateTurnSignal("left") //! not safe!
 // new Car(2017, "Honda", "Accord") //! not safe!
+
+//* Parameter properties
+
+// constructor(
+//     public make: string,
+//     public model: string,
+//     public year: number
+//   ) {}
+
+class Base {}
+
+class Car2 extends Base {
+  foo = console.log("class field initializer")
+  constructor(public make: string) {
+    super()
+    console.log("custom constructor stuff")
+  }
+}
 
 
 //? method types
@@ -107,23 +121,7 @@ let sedan = new Car('Honda', 'Accord', 2017)
 //     this.#serialNumber = num
 // }
 
-//* Parameter properties
-/*
-// constructor(
-//     public make: string,
-//     public model: string,
-//     public year: number
-//   ) {}
 
-// class Base {}
-
-// class Car2 extends Base {
-//   foo = console.log("class field initializer")
-//   constructor(public make: string) {
-//     super()
-//     console.log("custom constructor stuff")
-//   }
-// }
 
 //* Overrides
 
