@@ -11,13 +11,40 @@ class Car {
     //     ^?
     this.year = year
   }
+
+  //* static member fields
+  static nextSerialNumber = 100
+  static generateSerialNumber() { return this.nextSerialNumber++ }
+
+  //* JS private #fields
+
+  //? private to all instances of the class, not just the instance that
+  //? declares it
+
+  //? member fields
+  readonly #serialNumber = Car.generateSerialNumber()
+
+  //* Private field presence checks
+
+  equals(other: unknown) {
+    if (
+      other &&
+      typeof other === 'object' &&
+      #serialNumber in other
+    ) {
+        other
+  //?     ^ At this point, typescript knows that `other` is a Car instance
+        return other.#serialNumber === this.#serialNumber //* other instances of Car can access the private field
+      }
+      return false
+  }
 }
 
 let sedan = new Car('Honda', 'Accord', 2017)
 // sedan.activateTurnSignal("left") //! not safe!
 // new Car(2017, "Honda", "Accord") //! not safe!
 
-/*
+
 //? method types
 // honk(duration: number): string {
 //     return `h${'o'.repeat(duration)}nk`;
@@ -25,9 +52,6 @@ let sedan = new Car('Honda', 'Accord', 2017)
 // const c = new Car("Honda", "Accord", 2017);
 // c.honk(5); // "hooooonk"
 
-/*
-//? static member fields
-// static nextSerialNumber = 100
 // static generateSerialNumber() { return this.nextSerialNumber++ }
 // getLabel() {
 // return `${this.make} ${this.model} ${this.year} - #${this.serialNumber}`
@@ -38,7 +62,7 @@ let sedan = new Car('Honda', 'Accord', 2017)
 // console.log( new Car("Toyota", "Camry", 2022))
 // // > "Toyota Camry 2022 - #101
 
-/*
+
 //? static blocks
 // static {
 //     // `this` is the static scope
@@ -51,7 +75,7 @@ let sedan = new Car('Honda', 'Accord', 2017)
 // serialNumber = Car.generateSerialNumber()
 
 //* Access modifier keywords
-/*
+
 //? on member fields
 // private _serialNumber = Car.generateSerialNumber()
 // protected get serialNumber() {
@@ -60,41 +84,24 @@ let sedan = new Car('Honda', 'Accord', 2017)
 // const s = new Sedan("Nissan", "Altima", 2020)
 // s.serialNumber
 
-/*
+
 //? on static fields
 // private static nextSerialNumber: number
 // private static generateSerialNumber() { return this.nextSerialNumber++ }
 // Car.generateSerialNumber()
-
-//* JS private #fields
-/*
-//? member fields
-// #serialNumber = Car.generateSerialNumber()
 // c.#serialNumber
 
-/*
+
 //? static fields
 // static #nextSerialNumber: number
 // static #generateSerialNumber() { return this.#nextSerialNumber++ }
 // #serialNumber = Car.#generateSerialNumber()
 
-//* Private field presence checks
-/*
-// equals(other: unknown) {
-//     if (other &&
-//       typeof other === 'object' &&
-//       #serialNumber in other) {
-//         other
-// //       ^?
-//         return other.#serialNumber = this.#serialNumber
-//       }
-//       return false
-//   }
 // const c2 = c1
 // c2.equals(c1)
 
 //* readonly
-/*
+
 // readonly #serialNumber = Car.#generateSerialNumber()
 // changeSerialNumber(num: number) {
 //     this.#serialNumber = num
